@@ -1,0 +1,17 @@
+{
+  "name": "DynamicJS",
+  "version": "0.0.1",
+  "description": "Piwik Dynamic JS creator",
+  "theme": false,
+  "require": {
+    "piwik": ">=2.14.2",
+    "php":">=7.0.0"
+  },
+  "authors": [
+    {
+      "name": "Pouyan Azari",
+      "email": "pouyan.azari@uni-wuerzburg.de",
+      "homepage": "http://go.uniwue.de/azari"
+    }
+  ]
+}

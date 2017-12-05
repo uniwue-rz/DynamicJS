@@ -1,0 +1,94 @@
+{% extends 'admin.twig' %}
+    {% block content %} 
+        <div ng-controller="DynamicJSAdminController as adminController">
+        <h1>{{'DynamicJS_Settings'|translate}}</h1> {{'DynamicJS_Description'|translate}}
+        <h2>{{'DynamicJS_GeneralSettings'|translate}}</h2>
+        <div piwik-field uicontrol="text" name="accepted_domains"
+            ng-model="adminController.data.accepted_domains"
+            title="{{'DynamicJS_AcceptedDomains'|translate}}"
+            {% if DynamicJSConfig.accepted_domains != '' %} value="{{ DynamicJSConfig.accepted_domains }}" {%endif%}
+            inline-help="{{'DynamicJS_AcceptedDomainsDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="text" name="default_email"
+            ng-model="adminController.data.default_email"
+            title="{{'DynamicJS_DefaultEmail'|translate}}"
+            {% if DynamicJSConfig.default_email != '' %} value="{{ DynamicJSConfig.default_email }}" {%endif%}
+            inline-help="{{'DynamicJS_DefaultEmailDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="text" name="recursion_level"
+            ng-model="adminController.data.recursion_level"
+            title="{{'DynamicJS_RecursionLevel'|translate}}"
+            {% if DynamicJSConfig.recursion_level != '' %} value="{{ DynamicJSConfig.recursion_level }}" {%endif%}
+            inline-help="{{'DynamicJS_RecursionLevelDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="checkbox" name="enable_cache"
+            ng-model="adminController.data.enable_cache"
+            title="{{'DynamicJS_EnableCache'|translate}}"
+            {{ DynamicJSConfig.enable_cache ? 'value=1' : 'value=0' }}
+            inline-help="{{'DynamicJS_EnableCacheDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="checkbox" name="enable_add_host"
+            ng-model="adminController.data.enable_add_host"
+            title="{{'DynamicJS_EnableAddHost'|translate}}"
+            {{ DynamicJSConfig.enable_add_host ? 'value=1' : 'value=0' }}
+            inline-help="{{'DynamicJS_EnableAddHostDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="checkbox" name="enable_add_user"
+            ng-model="adminController.data.enable_add_user"
+            title="{{'DynamicJS_EnableAddUser'|translate}}"
+            {{ DynamicJSConfig.enable_add_user ? 'value=1' : 'value=0' }}
+            inline-help="{{'DynamicJS_EnableAddUserDesc'|translate}}">
+        </div>              
+        <div piwik-field uicontrol="text" name="default_access"
+            ng-model="adminController.data.default_access"
+            title="{{'DynamicJS_DefaultAccess'|translate}}"
+            {% if DynamicJSConfig.default_access != '' %} value="{{ DynamicJSConfig.default_access }}" {%endif%}
+            inline-help="{{'DynamicJS_DefaultAccessDesc'|translate}}">
+        </div>
+        {# The backend setting will only be shown when the user proactively uses the configuration#}
+        <h2>{{'DynamicJS_BackendSettings'|translate}}</h2>
+        <div piwik-field uicontrol="text" name="backend_paths"
+            ng-model="adminController.data.backend_paths"
+            title="{{'DynamicJS_BackendPaths'|translate}}"
+            {% if DynamicJSConfig.backend_paths != '' %} value="{{ DynamicJSConfig.backend_paths }}" {%endif%}
+            inline-help="{{'DynamicJS_BackendPathsDesc'|translate}}">
+        </div>        
+        <div piwik-field uicontrol="select" name="default_backend" ng-init="adminController.setVisible('{{DynamicJSConfig.default_backend }}')"
+            ng-model="adminController.data.default_backend"
+            title="{{'DynamicJS_DefaultBackend'|translate}}"
+            ng-change="adminController.showVariables(adminController.data.default_backend)"
+            options = '{{ backendList | json_encode() | raw}}'
+            {% if DynamicJSConfig.default_backend != '' %} value="{{ DynamicJSConfig.default_backend }}" {%endif%}
+            inline-help="{{'DynamicJS_DefaultBackendDesc'|translate}}">
+        </div>
+        {% for k, backendObject in backendObjects %}
+                <h3 ng-show='adminController.data.activeBackend == "{{k}}"'>{{k}}</h3>
+                {% for variable in backendObject.getVariables %}
+                {{ include(template_from_string(variable.getPiwikField)) }}
+                {% endfor %}
+        {% endfor %}
+        <h2>{{'DynamicJS_ScriptSetting'|translate}}</h2>
+        <div piwik-field uicontrol="textarea" name="script_template"
+            ng-model="adminController.data.script_template"
+            title="{{'DynamicJS_ScriptTemplate'|translate}}"
+            {% if DynamicJSConfig.script_template != '' %} value="{{ DynamicJSConfig.script_template | e}}" {%endif%}
+            inline-help="{{'DynamicJS_ScriptTemplateDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="checkbox" name="enable_no_script"
+            ng-model="adminController.data.enable_no_script"
+            title="{{'DynamicJS_EnableNoScript'|translate}}"
+            {{ DynamicJSConfig.enable_no_script ? 'value=1' : 'value=0' }}
+            inline-help="{{'DynamicJS_EnableNoScriptDesc'|translate}}">
+        </div>  
+        <div piwik-save-button
+            onconfirm="adminController.save()"
+            saving="adminController.isLoading">
+        </div>
+        <h2>{{'DynamicJS_CacheSetting'|translate}}</h2>
+        <p>{{'DynamicJS_FlushCacheDesc'|translate}}</p>
+            <div piwik-save-button
+                value = {{'DynamicJS_FlushCache'|translate}}
+                onconfirm="adminController.flush()"
+                saving="adminController.isLoading">
+    </div>
+    {% endblock %}

@@ -1,0 +1,20 @@
+{
+    "name": "rzuw/piwik-dynamic-js",
+    "version": "3.3.0",
+    "type": "library",
+    "description": "Dynamic Javascript Generator based on LDAP",
+    "keywords": ["javascript", "piwik.js", "ldap"],
+    "license": "GPL v3+",
+    "homepage": "http://uni-wuerzburg.de",
+    "require": {
+        "symfony/ldap" : "^3.2",
+        "paragonie/random_compat" :"~1.1"
+    },
+    "authors": [
+        {
+            "name": "Pouyan Azari",
+            "email": "pouyan.azari@uni-wuerzburg.de",
+            "homepage": "https://go.uniwue.de/azari"
+        }
+    ]
+}
