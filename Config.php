@@ -123,6 +123,7 @@ class Config
             // This one removes the non printable random appearing character
             //@link https://stackoverflow.com/questions/8781911/remove-non-ascii-characters-from-string
             $value = preg_replace('/[[:^print:]]/', '', $v);
+            $allConfig[$k] = $value;
         }
         PiwikConfig::getInstance()->DynamicJS = $allConfig;
         PiwikConfig::getInstance()->forceSave();
