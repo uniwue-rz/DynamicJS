@@ -186,7 +186,6 @@ class LdapBackend extends Backend
             new BackendVariable("ldap_username_info_filter", "text", "", "DynamicJS_LdapUsernameInfoFilter", "DynamicJS_LdapUsernameInfoFilterDesc", $this->getName()),
             new BackendVariable("ldap_username_info_username_key", "text", "uid", "DynamicJs_LdapUsernameInfoUsernameKey", "DynamicJS_LdapUsernameInfoUsernameKeyDesc", $this->getName()),
             new BackendVariable("ldap_username_info_dn", "text", "", "DynamicJs_LdapUsernameInfoDn", "DynamicJS_LdapUsernameInfoDnDesc", $this->getName())
-            
         );
     }
 
@@ -202,18 +201,19 @@ class LdapBackend extends Backend
         $siteId = 0;
         $parsedUrl = $this->getPossibleUrls($url, $this->recursionLevel);
         $existingUrl = $this->urlExists($parsedUrl);
+        $urlWithSchema = $this->getUrlWithScheme($existingUrl);
         if ($existingUrl !== null) {
-            $siteId = $this->piwikBackend->getSiteId($existingUrl, $this->recursionLevel, true);
+            $siteId = $this->piwikBackend->getSiteId($urlWithSchema, $this->recursionLevel, true);
             if ($siteId !== 0) {
                 return $siteId;
             } else {
                 // Add the not existing host to Piwik
                 if ($this->enableAddHost === true) {
-                    $siteId = $this->piwikBackend->addSite($this->getUrlWithScheme($existingUrl), 1, true);
+                    $siteId = $this->piwikBackend->addSite($urlWithSchema, 1, true);
                 }
                 // Add the access user to piwik
                 if ($this->enableAddHost === true && $this->enableAddUser === true) {
-                    $parsedUrl = parse_url($this->getUrlWithScheme($existingUrl));
+                    $parsedUrl = parse_url($urlWithSchema);
                     $accessUsers = $this->getAccessUsers($parsedUrl["host"], $parsedUrl["path"], "", "", false);
                     foreach ($accessUsers as $user) {
                         $userInformation = $this->getUserInformation($user);
@@ -385,7 +385,7 @@ class LdapBackend extends Backend
         $result = null;
         $domain = $parsedUrl["domain"];
         // Allow domain it self always be the last resort.
-        array_push($parsedUrl["path"], "");        
+        array_push($parsedUrl["path"], "");
         $paths  = $parsedUrl["path"];
         $resultCount = 0;
         foreach ($paths as $p) {
