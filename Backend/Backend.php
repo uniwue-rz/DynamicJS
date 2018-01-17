@@ -235,7 +235,7 @@ class Backend
         $paths = array();
         if (isset($result["path"]) === true) {
             if($this->enableMultiLang === true && $this->multiLangRegex !== null){
-                $parsedUrl["path"] = preg_replace($this->multiLangRegex, "", $parsedUrl["path"]);
+                $parsedUrl["path"] = preg_replace($this->multiLangRegex, "/", $parsedUrl["path"]);
             }
             $paths = \explode("/", $parsedUrl["path"]);
         }

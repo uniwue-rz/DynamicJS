@@ -1,5 +1,9 @@
 # ChangeLog
 
+## [0.0.3] 2018-01-17
+
+- Small Error in regex matching
+
 ## [0.0.2] 2018-01-17
 
 - Allow multilang website to be also added

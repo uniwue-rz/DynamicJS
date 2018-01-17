@@ -31,7 +31,7 @@ class Config
         "script_template" => "",
         "enable_no_script" => 1,
         "enable_multi_lang" => false,
-        "multi_lang_regex" => '[a-z][a-z]\/',
+        "multi_lang_regex" => '^\/[a-z][a-z]\/',
     );
 
     /**
