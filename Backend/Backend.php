@@ -85,6 +85,18 @@ class Backend
     protected $scriptTemplate;
 
     /**
+     * Placeholder for the multi lang support of Piwik
+     * @var boolean
+     */
+    protected $enableMultiLang;
+
+    /**
+     * Placeholder for regex that should be used for multi lang
+     * @var string
+     */
+    protected $multiLangRegex;
+
+    /**
      * Constructor
      *
      */
@@ -100,6 +112,8 @@ class Backend
         $this->defaultBackend = Config::getInstance()->DynamicJS['default_backend'];
         $this->defaultAccess = Config::getInstance()->DynamicJS['default_access'];
         $this->scriptTemplate = Config::getInstance()->DynamicJS['script_template'];
+        $this->enableMultiLang = (boolean) Config::getInstance()->DynamicJS['enable_multi_lang'];
+        $this->multiLangRegex = "/".Config::getInstance()->DynamicJS['multi_lang_regex'] ."/";
         $this->cache = Cache::getLazyCache();
     }
 
@@ -204,9 +218,9 @@ class Backend
     /**
      * Returns the list of possible urls
      *
-     * @param string $url   The urls that should be used
-     * @param int    $level The level of recursion for the given url
-     *
+     * @param string  $url               The urls that should be used
+     * @param int     $level             The level of recursion for the given url
+     * 
      * @return array
      */
     public function getPossibleUrls($url, $level = 1)
@@ -219,12 +233,15 @@ class Backend
         $result["domain"] = $parsedUrl["host"];
         $result["path"] = array();
         $paths = array();
-        if(isset($result["path"]) === true){
-            $paths = \explode("/", $parsedUrl["path"]);            
+        if (isset($result["path"]) === true) {
+            if($this->enableMultiLang === true && $this->multiLangRegex !== null){
+                $parsedUrl["path"] = preg_replace($this->multiLangRegex, "", $parsedUrl["path"]);
+            }
+            $paths = \explode("/", $parsedUrl["path"]);
         }
         if (sizeof($paths) > 0) {
             for ($i = 1; $i < $level+1; $i++) {
-                $path = \implode("/", \array_slice($paths, 1, $i));
+                $path = \implode("/", \array_slice($paths, 1, $i));        
                 \array_push($result["path"], $path);
             }
         }
@@ -288,7 +305,7 @@ class Backend
      */
     public function getCacheKey($class, $function, $variables)
     {
-        if(is_array($variables) === false){
+        if (is_array($variables) === false) {
             $variables = array($variables);
         }
         $variableString = serialize($variables);

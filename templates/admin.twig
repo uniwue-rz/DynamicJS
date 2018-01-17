@@ -21,6 +21,18 @@
             {% if DynamicJSConfig.recursion_level != '' %} value="{{ DynamicJSConfig.recursion_level }}" {%endif%}
             inline-help="{{'DynamicJS_RecursionLevelDesc'|translate}}">
         </div>
+        <div piwik-field uicontrol="checkbox" name="enable_multi_lang"
+            ng-model="adminController.data.enable_multi_lang"
+            title="{{'DynamicJS_EnableMultiLang'|translate}}"
+            {{ DynamicJSConfig.enable_multi_lang ? 'value=1' : 'value=0' }}
+            inline-help="{{'DynamicJS_EnableMultiLangDesc'|translate}}">
+        </div>
+        <div piwik-field uicontrol="text" name="multi_lang_regex"
+            ng-model="adminController.data.multi_lang_regex"
+            title="{{'DynamicJS_MultiLangRegex'|translate}}"
+            {% if DynamicJSConfig.multi_lang_regex != '' %} value="{{ DynamicJSConfig.multi_lang_regex }}" {%endif%}
+            inline-help="{{'DynamicJS_MultiLangRegexDesc'|translate}}">
+        </div>
         <div piwik-field uicontrol="checkbox" name="enable_cache"
             ng-model="adminController.data.enable_cache"
             title="{{'DynamicJS_EnableCache'|translate}}"

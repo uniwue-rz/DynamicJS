@@ -1,6 +1,6 @@
 {
     "DynamicJS": {
-        "Settings" : "DynamicJS Settings",
+        "Settings": "DynamicJS Settings",
         "Description": "DynamicJS let the provider of Piwik service, converts given url to site id and custom Javascript which can be loaded by the website.",
         "BackendSettings": "Backend Settings",
         "DefaultBackend": "Default Backend",
@@ -11,7 +11,7 @@
         "GeneralSettings": "General Settings",
         "BackendPaths": "Backend Paths",
         "BackendPathsDesc": "The path of the folders that contains the backends. This should be added in comma separated values",
-        "AcceptedDomainsDesc": "Domains that the server should react too. It is done to avoid DDOS and limit the responses the server makes. Use comma separated values",
+        "AcceptedDomainsDesc": "Domains that the server should react to. It is done to avoid DDOS and limit the responses the server makes. Use comma separated values",
         "RecursionLevel": "Recursion Level",
         "RecursionLevelDesc": "How deep should the path be checked for existing site id. The default value is 1.",
         "EnableCache": "Enable Caching",
@@ -19,7 +19,11 @@
         "CacheSetting": "Cache Setting",
         "FlushCache": "Flush Cache",
         "FlushCacheDesc": "Flushes the given cache, we use the lazy backend so everything there will be flushed",
-        "FlushCacheSuccess" : "Cache Flushes Successfully",
+        "FlushCacheSuccess": "Cache Flushes Successfully",
+        "EnableMultiLang": "Enables MultiLang Support",
+        "EnableMultiLangDesc": "Enables Matching which have locale in the path like /en/... or /de/",
+        "MultiLangRegex": "Regex for Matching Locale",
+        "MultiLangRegexDesc": "The regex that should be used to match multi language paths. defaults /[a-z][a-z]\//",
         "RemoveCache": "Remove Cache",
         "ScriptTemplate": "Script Template",
         "ScriptTemplateDesc": "Script template allows you to customize the end result of this extension, the site id found will be added in the placeholder variable  {{siteId}}.",
@@ -51,6 +55,16 @@
         "LdapUsernameRegex": "Ldap Username Regex",
         "LdapUsernameRegexDesc": "The regex which is used to find the username in the username string.<br> Example: <pre>/cn=(?&lt;username&gt;[0-9A-Z-a-z]+)/</pre>",
         "LdapUsernameRegexMatchKey": "Ldap Username Matching Key",
-        "LdapUsernameRegexMatchKeyDesc": "The key for the matching used in the regex. In the example it is username"
+        "LdapUsernameRegexMatchKeyDesc": "The key for the matching used in the regex. In the example it is username",
+        "LdapUsernameInfoEmailKey": "Ldap Email Key",
+        "LdapUsernameInfoEmailKeyDesc": "The key that should be used to find email in LDAP results",
+        "LdapUsernameInfoAliasKey": "Ldap Alias Key",
+        "LdapUsernameInfoAliasKeyDesc": "The key that should be usd to find alias in LDAP results",
+        "LdapUsernameInfoUsernameKeyDesc": "The key that should be used to find a username in LDAP results",
+        "LdapUsernameInfoUsernameKey": "Ldap Username Key",
+        "LdapUsernameInfoDnDesc": "The DN that should be used for LDAP user information search",
+        "LdapUsernameInfoDn": "LDAP DN for User Info",
+        "LdapUsernameInfoFilter": "Ldap User Info Filter",
+        "LdapUsernameInfoFilterDesc": "The filter that should be used to find user"
     }
 }

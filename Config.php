@@ -29,7 +29,9 @@ class Config
         "backend_paths" => "",
         "default_access" => "view",
         "script_template" => "",
-        "enable_no_script" => 1
+        "enable_no_script" => 1,
+        "enable_multi_lang" => false,
+        "multi_lang_regex" => '[a-z][a-z]\/',
     );
 
     /**
@@ -88,7 +90,7 @@ class Config
         }
         $result = array_merge($result, PiwikConfig::getInstance()->DynamicJS);
         // This is done because of the encoding problems
-        // More info here: 
+        // More info here:
         if (isset($result["script_template"]) === true) {
             $result["script_template"] =  html_entity_decode($result["script_template"], ENT_QUOTES, 'UTF-8');
         }
