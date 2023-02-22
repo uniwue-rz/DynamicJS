@@ -9,15 +9,15 @@
 
 namespace Piwik\Plugins\DynamicJS\Backend;
 
-use Twig_Environment;
-use Twig_Loader_Array;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class LdapFilter
 {
     /**
      * Placeholder for the twig
      *
-     * @var Twig_Environment
+     * @var Environment
      */
     private $twig;
 
@@ -28,8 +28,8 @@ class LdapFilter
      */
     public function __construct($filter)
     {
-        $loader = new Twig_Loader_Array(array("filter" => $filter));
-        $this->twig = new Twig_Environment($loader);
+        $loader = new ArrayLoader(["filter" => $filter]);
+        $this->twig = new Environment($loader);
     }
 
     /**

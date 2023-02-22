@@ -184,8 +184,8 @@ class LdapBackend extends Backend
             new BackendVariable("ldap_username_info_email_key", "text", "mail", "DynamicJS_LdapUsernameInfoEmailKey", "DynamicJS_LdapUsernameInfoEmailKeyDesc", $this->getName()),
             new BackendVariable("ldap_username_info_alias_key", "text", "", "DynamicJS_LdapUsernameInfoAliasKey", "DynamicJS_LdapUsernameInfoAliasKeyDesc", $this->getName()),
             new BackendVariable("ldap_username_info_filter", "text", "", "DynamicJS_LdapUsernameInfoFilter", "DynamicJS_LdapUsernameInfoFilterDesc", $this->getName()),
-            new BackendVariable("ldap_username_info_username_key", "text", "uid", "DynamicJs_LdapUsernameInfoUsernameKey", "DynamicJS_LdapUsernameInfoUsernameKeyDesc", $this->getName()),
-            new BackendVariable("ldap_username_info_dn", "text", "", "DynamicJs_LdapUsernameInfoDn", "DynamicJS_LdapUsernameInfoDnDesc", $this->getName())
+            new BackendVariable("ldap_username_info_username_key", "text", "uid", "DynamicJS_LdapUsernameInfoUsernameKey", "DynamicJS_LdapUsernameInfoUsernameKeyDesc", $this->getName()),
+            new BackendVariable("ldap_username_info_dn", "text", "", "DynamicJS_LdapUsernameInfoDn", "DynamicJS_LdapUsernameInfoDnDesc", $this->getName())
         );
     }
 

@@ -22,43 +22,25 @@ use Symfony\Component\Ldap\Exception\ConnectionException;
  */
 interface LdapInterface
 {
-    const ESCAPE_FILTER = 0x01;
-    const ESCAPE_DN = 0x02;
+    public const ESCAPE_FILTER = 0x01;
+    public const ESCAPE_DN = 0x02;
 
     /**
      * Return a connection bound to the ldap.
      *
-     * @param string $dn       A LDAP dn
-     * @param string $password A password
-     *
-     * @throws ConnectionException If dn / password could not be bound.
+     * @throws ConnectionException if dn / password could not be bound
      */
-    public function bind($dn = null, $password = null);
+    public function bind(string $dn = null, #[\SensitiveParameter] string $password = null);
 
     /**
      * Queries a ldap server for entries matching the given criteria.
-     *
-     * @param string $dn
-     * @param string $query
-     * @param array  $options
-     *
-     * @return QueryInterface
      */
-    public function query($dn, $query, array $options = array());
+    public function query(string $dn, string $query, array $options = []): QueryInterface;
 
-    /**
-     * @return EntryManagerInterface
-     */
-    public function getEntryManager();
+    public function getEntryManager(): EntryManagerInterface;
 
     /**
      * Escape a string for use in an LDAP filter or DN.
-     *
-     * @param string $subject
-     * @param string $ignore
-     * @param int    $flags
-     *
-     * @return string
      */
-    public function escape($subject, $ignore = '', $flags = 0);
+    public function escape(string $subject, string $ignore = '', int $flags = 0): string;
 }

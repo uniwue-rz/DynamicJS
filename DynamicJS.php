@@ -14,7 +14,7 @@ class DynamicJS extends \Piwik\Plugin
     /**
      * Register the hooks to this Plugin.
      */
-    public function getListHooksRegistered()
+    public function registerEvents()
     {
         $hooks = array(
             'AssetManager.getJavaScriptFiles' => 'getJsFiles',

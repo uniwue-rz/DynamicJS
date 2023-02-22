@@ -1,17 +1,30 @@
 {
   "name": "DynamicJS",
-  "version": "0.0.3",
-  "description": "Piwik Dynamic JS creator",
+  "version": "0.1.0",
+  "description": "Dynamic Javascript Generator based on LDAP",
   "theme": false,
+  "keywords": [
+    "dynamic",
+    "javascript",
+    "js",
+    "snippet",
+    "siteid",
+    "ldap"
+  ],
   "require": {
-    "piwik": ">=2.14.2",
-    "php":">=7.0.0"
+    "matomo": ">=4.0.0-b1,<5.0.0-b1",
+    "php": ">=8.1"
   },
   "authors": [
     {
       "name": "Pouyan Azari",
       "email": "pouyan.azari@uni-wuerzburg.de",
       "homepage": "http://go.uniwue.de/azari"
+    },
+    {
+      "name": "Lucas Kinne",
+      "email": "lucas.kinne@uni-wuerzburg.de",
+      "homepage": "http://go.uniwue.de/kinne"
     }
   ]
 }

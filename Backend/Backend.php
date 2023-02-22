@@ -9,8 +9,8 @@ namespace Piwik\Plugins\DynamicJS\Backend;
 
 use Piwik\Cache;
 use Piwik\Config;
-use Twig_Environment;
-use Twig_Loader_Array;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class Backend
 {
@@ -389,8 +389,8 @@ class Backend
             }
         }
         $template = html_entity_decode($this->scriptTemplate, ENT_QUOTES, 'UTF-8');
-        $loader = new Twig_Loader_Array(array("template" => $template));
-        $twig = new Twig_Environment($loader);
+        $loader = new ArrayLoader(["template" => $template]);
+        $twig = new Environment($loader);
         $result = $twig->render("template", array("siteId" => $siteId));
         if ($this->cacheActive === true) {
             $this->saveInCache($cacheKey, $result);

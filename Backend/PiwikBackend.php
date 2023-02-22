@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\DynamicJS\Backend;
 
+use Piwik\Access;
 use Piwik\Container\StaticContainer;
 use Piwik\Config;
 use Piwik\Piwik;
@@ -116,14 +117,9 @@ class PiwikBackend extends Backend
      */
     public function getSiteIdSingle($url)
     {
-        $siteId = 0;
-        Piwik::setUserHasSuperUserAccess();
-        $siteIds = $this->sitesManager->getSitesIdFromSiteUrl($url);
-        Piwik::setUserHasSuperUserAccess(false);
-        if (sizeof($siteIds)>0) {
-            $siteId = (int) $siteIds[0]["idsite"];
-        }
-        return $siteId;
+        return (int) Access::doAsSuperUser(function () use ($url) {
+            return $this->sitesManager->getSitesIdFromSiteUrl($url)[0]['idsite'] ?? 0;
+        });
     }
 
     /**
@@ -141,18 +137,15 @@ class PiwikBackend extends Backend
         if ($this->isDomainAccepted($url) === false) {
             return 0;
         }
-        $siteId = $this->getSiteId($url, $level, $exact);
-        if ($siteId === 0) {
-            // Enable SuperUser flag
-            Piwik::setUserHasSuperUserAccess();
-            $siteId = $this->sitesManager->addSite(
-                $url,
-                $this->getCompleteUrls($url)
-            );
-            // Disable SuperUser flag
-            Piwik::setUserHasSuperUserAccess(false);
-        }
-        return $siteId;
+
+        return $this->getSiteId($url, $level, $exact) ?:
+            Access::doAsSuperUser(function () use ($url) {
+                return $this->sitesManager->addSite(
+                    $url,
+                    $this->getCompleteUrls($url)
+                );
+            }
+        );
     }
 
     /**
@@ -171,14 +164,13 @@ class PiwikBackend extends Backend
         if ($this->userExists($username) === false) {
             throw new \Exception("Username $username does not exists");
         }
-        // Enable SuperUser flag
+
         if ($this->isUserSuperUser($username) === false) {
-            // Important S Flag should be used always before and after the required query
-            Piwik::setUserHasSuperUserAccess();
-            $this->usersManager->setUserAccess($username, $accessType, array($siteId));
-            Piwik::setUserHasSuperUserAccess(false);
-            return true;
+            Access::doAsSuperUser(function () use ($username, $accessType, $siteId) {
+                $this->usersManager->setUserAccess($username, $accessType, [$siteId]);
+            });
         }
+
         return true;
     }
 
@@ -191,11 +183,9 @@ class PiwikBackend extends Backend
      */
     public function isUserSuperUser($username)
     {
-        $status = false;
-        Piwik::setUserHasSuperUserAccess();
-        $status = Piwik::hasTheUserSuperUserAccess($username);
-        Piwik::setUserHasSuperUserAccess(false);
-        return $status;
+        return Access::doAsSuperUser(function () use ($username) {
+            return Piwik::hasTheUserSuperUserAccess($username);
+        });
     }
 
     /**
@@ -216,11 +206,9 @@ class PiwikBackend extends Backend
         if ($this->userExists($username) === false) {
             $password = $password === null ? $this->generatePassword() : $password;
             $email = $email === null ? $this->defaultEmail : $email;
-            // Enable SuperUser flag
-            Piwik::setUserHasSuperUserAccess();
-            $this->usersManager->addUser($username, $password, $email, $alias);
-            // Disable SuperUser flag
-            Piwik::setUserHasSuperUserAccess(false);
+            Access::doAsSuperUser(function () use ($username, $password, $email, $alias) {
+                $this->usersManager->addUser($username, $password, $email, $alias);
+            });
         }
         
         return true;
@@ -237,13 +225,9 @@ class PiwikBackend extends Backend
      */
     public function userExists($username)
     {
-        $status = false;
-        // Enable SuperUser flag
-        Piwik::setUserHasSuperUserAccess();
-        $status = $this->usersManager->userExists($username);
-        // Disable SuperUser flag
-        Piwik::setUserHasSuperUserAccess(false);
-        return $status;
+        return Access::doAsSuperUser(function () use ($username) {
+            return $this->usersManager->userExists($username);
+        });
     }
 
     /**
@@ -255,12 +239,8 @@ class PiwikBackend extends Backend
      */
     public function getUserAccess($username)
     {
-        $access = array();
-        // Enable SuperUser flag
-        Piwik::setUserHasSuperUserAccess();
-        $access = $this->usersManager->getSitesAccessFromUser($username);
-        // Disable SuperUser flag
-        Piwik::setUserHasSuperUserAccess(false);
-        return $access;
+        return Access::doAsSuperUser(function () use ($username) {
+            return $this->usersManager->getSitesAccessFromUser($username);
+        });
     }
 }

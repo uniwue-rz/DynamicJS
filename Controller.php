@@ -18,7 +18,7 @@ use Piwik\Plugin\ControllerAdmin;
 use Piwik\Plugins\DynamicJS\Backend\BackendManager;
 use Piwik\Container\StaticContainer;
 
-use Twig_Extension_StringLoader;
+use Twig\Extension\StringLoaderExtension;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -33,7 +33,7 @@ class Controller extends \Piwik\Plugin\Controller
         $backendManager = new BackendManager();
         Piwik::checkUserHasSuperUserAccess();
         $view = new View('@DynamicJS/admin');
-        $view->getTwig()->addExtension(new Twig_Extension_StringLoader());
+        $view->getTwig()->addExtension(new StringLoaderExtension());
         $this->setBasicVariablesView($view);
         ControllerAdmin::setBasicVariablesAdminView($view);
         $backendList = $backendManager->getBackends();

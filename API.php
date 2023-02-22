@@ -49,7 +49,7 @@ class API extends \Piwik\Plugin\API
         $piwikURL = SettingsPiwik::getPiwikUrl();
         $activeBackend = $this->getActiveBackend();
         $siteId = $activeBackend->getSiteId($url);
-        $result = "$piwikURL"."piwik.php?idsite=$siteId&rec=1";
+        $result = "$piwikURL"."matomo.php?idsite=$siteId&rec=1";
         return $result;
     }
 

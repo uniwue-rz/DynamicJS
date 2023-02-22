@@ -7,29 +7,18 @@ namespace Composer\Autoload;
 class ComposerStaticInitb05ee9bec22c3689cb66b1cc7bddacb6
 {
     public static $files = array (
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Symfony\\Polyfill\\Util\\' => 22,
-            'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Component\\OptionsResolver\\' => 34,
             'Symfony\\Component\\Ldap\\' => 23,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Util\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
-        ),
-        'Symfony\\Polyfill\\Php56\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
-        ),
         'Symfony\\Component\\OptionsResolver\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/options-resolver',
@@ -40,11 +29,16 @@ class ComposerStaticInitb05ee9bec22c3689cb66b1cc7bddacb6
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb05ee9bec22c3689cb66b1cc7bddacb6::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb05ee9bec22c3689cb66b1cc7bddacb6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb05ee9bec22c3689cb66b1cc7bddacb6::$classMap;
 
         }, null, ClassLoader::class);
     }

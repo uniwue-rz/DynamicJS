@@ -1,20 +1,31 @@
 {
-    "name": "rzuw/piwik-dynamic-js",
+    "name": "rzuw/matomo-dynamic-js",
     "version": "3.3.0",
     "type": "library",
     "description": "Dynamic Javascript Generator based on LDAP",
-    "keywords": ["javascript", "piwik.js", "ldap"],
+    "keywords": [
+        "dynamic",
+        "javascript",
+        "js",
+        "snippet",
+        "siteid",
+        "ldap"
+    ],
     "license": "GPL v3+",
     "homepage": "http://uni-wuerzburg.de",
     "require": {
-        "symfony/ldap" : "^3.2",
-        "paragonie/random_compat" :"~1.1"
+        "symfony/ldap" : "^6.2"
     },
     "authors": [
         {
             "name": "Pouyan Azari",
             "email": "pouyan.azari@uni-wuerzburg.de",
             "homepage": "https://go.uniwue.de/azari"
+        },
+        {
+            "name": "Lucas Kinne",
+            "email": "lucas.kinne@uni-wuerzburg.de",
+            "homepage": "https://go.uniwue.de/kinne"
         }
     ]
 }
